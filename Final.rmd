@@ -1,6 +1,6 @@
 ---
 title: "Covid91 vaccine study Final2023"
-author: "Put your name here!"
+author: "Daniel"
 output: 
   html_document:
     number_sections: true
@@ -25,16 +25,75 @@ mutate(across(where(is.character), as.factor))
 A new  preventative vaccine (covid921) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups by gender( guys and gals), drug use, and sexual orientation. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbage when referencing p-values in conclusions.
 
 ## Males
+$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
+$H_A$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
 
+```{r}
+library(dplyr)
+male = filter(FinalData,FinalData$sex=='M')
+```
+
+#Methods
+
+Since we are comparing 
+
+#Results
+
+<!-- Split into Descriptive results and Inferential results. !--> 
+
+##Descrpitive Results
+
+<!-- Split into Graphical results and Numerical Results. !-->
+
+###Graphical Descriptive Results
+
+```{r}
+barchartGC(~infected + treatment ,data=male)
+barchartGC(~infected + treatment ,data=male, type="percent")
+```
+
+With the graph we see that, for males, those who who got the vaccine where around half as likely to receive covid. Those who did not have coivd saw close to no difference in effect. Approximately 30% of males who had gotten the vaccine got covid, however, 70% of males who received the placebo got covid.
+
+###Numerical Descriptive Results
+
+
+##Inferential Results
+#Discussion and Conclusion 
 
 ## Females
+$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
+$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
 
+#Methods
+#Results
+##Descrpitive Results
+###Graphical Descriptive Results
+###Numerical Descriptive Results
+##Inferential Results
+#Discussion and Conclusion 
 
 ## LGBTQ
+$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
+$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
 
-
+#Methods
+#Results
+##Descrpitive Results
+###Graphical Descriptive Results
+###Numerical Descriptive Results
+##Inferential Results
+#Discussion and Conclusion 
 
 ## Druggies
+$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
+$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
 
+#Methods
+#Results
+##Descrpitive Results
+###Graphical Descriptive Results
+###Numerical Descriptive Results
+##Inferential Results
+#Discussion and Conclusion 
 
 # Overall Results and Conclusions

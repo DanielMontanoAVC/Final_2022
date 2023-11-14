@@ -33,19 +33,19 @@ library(dplyr)
 male = filter(FinalData,FinalData$sex=='M')
 ```
 
-#Methods
+## Methods
 
 Since we are comparing 
 
-#Results
+## Results
 
 <!-- Split into Descriptive results and Inferential results. !--> 
 
-##Descrpitive Results
+### Descrpitive Results
 
 <!-- Split into Graphical results and Numerical Results. !-->
 
-###Graphical Descriptive Results
+#### Graphical Descriptive Results
 
 ```{r}
 barchartGC(~infected + treatment ,data=male)
@@ -54,46 +54,72 @@ barchartGC(~infected + treatment ,data=male, type="percent")
 
 With the graph we see that, for males, those who who got the vaccine where around half as likely to receive covid. Those who did not have coivd saw close to no difference in effect. Approximately 30% of males who had gotten the vaccine got covid, however, 70% of males who received the placebo got covid.
 
-###Numerical Descriptive Results
+#### Numerical Descriptive Results
 
+```{r}
+table1 <- xtabs( ~infected + treatment, data=male)
+rowPerc(table1)
+colPerc(table1)
+```
 
-##Inferential Results
-#Discussion and Conclusion 
+With the chart we can see that those with the vaccine were 30.43 people who received covid with the vaccine, and those who had a plaebo had 69.57 people get covid. We can see that a with the vaccine, you are a little more than half as likely to not get covid. The odds for getting covid is 2 : 1 odds, with 1 being the chance of getting covid.
+
+### Inferential Results
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+With the chisq test, we recive a p-value of 1.098e^-13, which is significantly smaller than 0.05. Through this test we can reject the null hypothesis of there being no difference in vaccine effectiveness in males.
+
+```{r}
+male$infected = factor(male$infected,c("OK","covid19"))
+fisher.test(male$treatment,male$infected)
+```
+
+Through the fisher exact we receive a p-value of 4.631e^-14, which is also significantly less than 0.05. Thus, we reject the null hypothesis of there being no difference in the vaccines effectiveness in males.
+
+## Discussion and Conclusion 
 
 ## Females
 $H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
 $H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
 
-#Methods
-#Results
-##Descrpitive Results
-###Graphical Descriptive Results
-###Numerical Descriptive Results
-##Inferential Results
-#Discussion and Conclusion 
+```{r}
+library(dplyr)
+female = filter(FinalData,FinalData$sex=='F')
+```
+
+##Methods
+##Results
+###Descrpitive Results
+####Graphical Descriptive Results
+####Numerical Descriptive Results
+###Inferential Results
+##Discussion and Conclusion 
 
 ## LGBTQ
 $H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
 $H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
 
-#Methods
-#Results
-##Descrpitive Results
-###Graphical Descriptive Results
-###Numerical Descriptive Results
-##Inferential Results
-#Discussion and Conclusion 
+##Methods
+##Results
+###Descrpitive Results
+####Graphical Descriptive Results
+####Numerical Descriptive Results
+###Inferential Results
+##Discussion and Conclusion 
 
 ## Druggies
 $H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
 $H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
 
-#Methods
-#Results
-##Descrpitive Results
-###Graphical Descriptive Results
-###Numerical Descriptive Results
-##Inferential Results
-#Discussion and Conclusion 
+##Methods
+##Results
+###Descrpitive Results
+####Graphical Descriptive Results
+####Numerical Descriptive Results
+###Inferential Results
+##Discussion and Conclusion 
 
 # Overall Results and Conclusions

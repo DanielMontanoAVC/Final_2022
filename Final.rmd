@@ -22,39 +22,43 @@ mutate(across(where(is.character), as.factor))
 
 # Introduction
 
-A new  preventative vaccine (covid921) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups by gender( guys and gals), drug use, and sexual orientation. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbage when referencing p-values in conclusions.
+A new preventative vaccine (covid921) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups by gender( guys and gals), drug use, and sexual orientation. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbage when referencing p-values in conclusions.
+
+$H_0$ There is no effectiveness in the new Covid921 vaccine when dealing with all sub-groups.
+$H_A$ There is effectiveness in the new Covid921 vaccine when dealing with all sub-groups.
+
 
 ## Males
-$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
-$H_A$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
+$H_0$; There is no effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
+$H_A$; There is effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with males
 
 ```{r}
 library(dplyr)
 male = filter(FinalData,FinalData$sex=='M')
 ```
 
-## Methods
+# Methods
 
-Since we are comparing 
+Since we are comparing sex (male) to treatment, which is categorical~categorical, so we in turn will be using the Cat~Cat helper file
 
-## Results
+# Results
 
 <!-- Split into Descriptive results and Inferential results. !--> 
 
-### Descrpitive Results
+## Descrpitive Results
 
 <!-- Split into Graphical results and Numerical Results. !-->
 
-#### Graphical Descriptive Results
+### Graphical Descriptive Results
 
 ```{r}
 barchartGC(~infected + treatment ,data=male)
 barchartGC(~infected + treatment ,data=male, type="percent")
 ```
 
-With the graph we see that, for males, those who who got the vaccine where around half as likely to receive covid. Those who did not have coivd saw close to no difference in effect. Approximately 30% of males who had gotten the vaccine got covid, however, 70% of males who received the placebo got covid.
+From the graph we can see that, those who did not have covid did not experience any difference. Those who were infected with covid 19 and saw much better results than those with a placebo
 
-#### Numerical Descriptive Results
+### Numerical Descriptive Results
 
 ```{r}
 table1 <- xtabs( ~infected + treatment, data=male)
@@ -62,64 +66,210 @@ rowPerc(table1)
 colPerc(table1)
 ```
 
-With the chart we can see that those with the vaccine were 30.43 people who received covid with the vaccine, and those who had a plaebo had 69.57 people get covid. We can see that a with the vaccine, you are a little more than half as likely to not get covid. The odds for getting covid is 2 : 1 odds, with 1 being the chance of getting covid.
+From the data we can see that the individuals with the vaccine have half of the infection rate, than those who had gotten the placebo.
 
-### Inferential Results
+## Inferential Results
 
 ```{r}
 chisq.test(table1)
 chisqtestGC(table1)
 ```
-With the chisq test, we recive a p-value of 1.098e^-13, which is significantly smaller than 0.05. Through this test we can reject the null hypothesis of there being no difference in vaccine effectiveness in males.
+With the chisq test, we receive a p-value of 1.098e^-13, which is significantly smaller than 0.05. Through this test we can reject the null hypothesis of there being no difference in vaccine effectiveness in males.
 
 ```{r}
 male$infected = factor(male$infected,c("OK","covid19"))
 fisher.test(male$treatment,male$infected)
 ```
 
-Through the fisher exact we receive a p-value of 4.631e^-14, which is also significantly less than 0.05. Thus, we reject the null hypothesis of there being no difference in the vaccines effectiveness in males.
+Through the fisher exact we receive a p-value of 4.631e^-14, which is also significantly less than 0.05. We also have .44 odds of getting infected with the vaccine.
 
-## Discussion and Conclusion 
+# Discussion and Conclusion 
+
+From our chisq test we receive a p-value of 1.098e^-13 and on our fisher exact test we receive a p-value of 4.631e^-14. From both of these test we can conclude that the vaccine is effective in males. The odds are 2 : 1  in favor of the vaccine for males.
 
 ## Females
-$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
-$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
+$H_0$; There is no effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
+$H_0$; There is effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with females
 
 ```{r}
 library(dplyr)
 female = filter(FinalData,FinalData$sex=='F')
 ```
 
-##Methods
-##Results
-###Descrpitive Results
-####Graphical Descriptive Results
-####Numerical Descriptive Results
-###Inferential Results
-##Discussion and Conclusion 
+#Methods
+
+Since we are comparing sex (female) to treatment, which is categorical~categorical, so we in turn will be using the Cat~Cat helper file
+
+#Results
+
+<!-- Split into Descriptive results and Inferential results. !--> 
+
+##Descrpitive Results
+
+<!-- Split into Graphical results and Numerical Results. !-->
+
+###Graphical Descriptive Results
+
+```{r}
+barchartGC(~infected + treatment ,data=female)
+barchartGC(~infected + treatment ,data=female, type="percent")
+```
+
+The graph shows that females who took the vaccine had a lower infection rate than those who had taken a placebo.
+
+###Numerical Descriptive Results
+
+
+```{r}
+table2 <- xtabs( ~infected + treatment, data=female)
+rowPerc(table2)
+colPerc(table2)
+```
+
+We can see from the data given that there is a difference of 20 among females who had taken the vaccine and those who had received a placebo.
+
+##Inferential Results
+
+```{r}
+chisq.test(table2)
+chisqtestGC(table2)
+```
+
+With the chisq test we receive a p-value of 0.0002732, which is lower than 0.05, therefore we reject the null hypothesis of there being no effectiveness in females.
+
+```{r}
+female$infected = factor(female$infected,c("OK","covid19"))
+fisher.test(female$treatment,female$infected)
+```
+
+With the fisher exact test we receive a p-value of 0.0002162, and we also receive 2 : 3 odds, in favor of the vaccine. Our odds are .66 as likly to get infected with the vaccine.
+
+#Discussion and Conclusion 
+
+Through our data with females, we received a p-value's of 0.0002732 and 0.0002162 through our chisq and fisher exact tests. We also received 2 : 3 odds in favor of the vaccine effectiveness in females. Therefore we can conclude that the vaccine is effective in females.
 
 ## LGBTQ
-$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
-$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
+$H_0$; There is no effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
+$H_0$; There is effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with members of the LGBTQ
 
-##Methods
-##Results
-###Descrpitive Results
-####Graphical Descriptive Results
-####Numerical Descriptive Results
-###Inferential Results
-##Discussion and Conclusion 
+```{r}
+library(dplyr)
+lgbtq = filter(FinalData,FinalData$LGBTQ=='gay')
+```
+
+#Methods
+
+Since we are comparing LGBTQ members to treatment, which is categorical~categorical, so we in turn will be using the Cat~Cat helper file
+
+#Results
+
+<!-- Split into Descriptive results and Inferential results. !--> 
+
+##Descrpitive Results
+
+<!-- Split into Graphical results and Numerical Results. !-->
+
+###Graphical Descriptive Results
+
+```{r}
+barchartGC(~infected + treatment ,data=lgbtq)
+barchartGC(~infected + treatment ,data=lgbtq, type="percent")
+```
+
+We can see that through the graph that those who got the vaccine saw more infections than those who got placebo.
+
+###Numerical Descriptive Results
+
+```{r}
+table3 <- xtabs( ~infected + treatment, data=lgbtq)
+rowPerc(table3)
+colPerc(table3)
+```
+
+We see that a much higher percent, of about 5 times higher infection rate than the individuals who had received a pleacbo.
+
+##Inferential Results
+
+```{r}
+chisq.test(table3)
+chisqtestGC(table3)
+```
+
+We receive a p-value of 6.668e^-08 which is less than 0.05 meaning we reject the null hypothesis
+
+```{r}
+lgbtq$infected = factor(lgbtq$infected,c("OK","covid19"))
+fisher.test(lgbtq$treatment,lgbtq$infected)
+```
+
+We receive a p-value of 1.029e^-08, and 5.5 odds ratio. Which means you are 5.5 times more likely to get infected with the vaccine.
+
+#Discussion and Conclusion  
+
+Due to the low p-values of 6.668e^-08 and 1.029e^-08, we reject the null hypothesis and say there is effectiveness in the vaccine, although more people were infected with the vaccine, it seems there is still effectiveness in the vaccine with our data.
 
 ## Druggies
-$H_0$; There is no difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
-$H_0$; There is a difference in effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
+$H_0$; There is no effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
+$H_0$; There is effectiveness in the new Covid921 vaccine and the placebo vaccine when dealing with "druggies"
 
-##Methods
-##Results
-###Descrpitive Results
-####Graphical Descriptive Results
-####Numerical Descriptive Results
-###Inferential Results
-##Discussion and Conclusion 
+```{r}
+library(dplyr)
+druggies = filter(FinalData,FinalData$DrugUser=='yes')
+```
+
+#Methods
+
+Since we are comparing "druggies" to treatment, which is categorical~categorical, so we in turn will be using the Cat~Cat helper file
+
+#Results
+
+<!-- Split into Descriptive results and Inferential results. !--> 
+
+##Descrpitive Results
+
+<!-- Split into Graphical results and Numerical Results. !-->
+
+###Graphical Descriptive Results
+
+```{r}
+barchartGC(~infected + treatment ,data=druggies)
+barchartGC(~infected + treatment ,data=druggies, type="percent")
+```
+
+The graph shows us that there is a higher infection rate with those who had received the vaccine.
+
+###Numerical Descriptive Results
+
+
+```{r}
+table4 <- xtabs( ~infected + treatment, data=druggies)
+rowPerc(table4)
+colPerc(table4)
+```
+
+We can see that it is about 8 times higher infection rate for those who had gotten the vaccine as opposed to those who had received the placebo.
+
+##Inferential Results
+
+```{r}
+chisq.test(table4)
+chisqtestGC(table4)
+```
+
+From our chisq test, we receive a p-value of 2.842e^-09 which means we reject the null hypothesis.
+
+```{r}
+druggies$infected = factor(druggies$infected,c("OK","covid19"))
+fisher.test(druggies$treatment,druggies$infected)
+```
+
+With the our new fisher exact test, we receive a p-value of 2.32e^-10, and odds ration of 7.9, which is essentially 8 times more likely to get infected with the vaccine.
+
+#Discussion and Conclusion  
+
+With our p-values being as low as they are, 2.842e^-09 and 2.32e^-10, based off of our chisq and fisher exact tests, it forces us to
+reject the null hypothesis of there being no effectiveness in the vaccine, although it has higher odds of infection.
 
 # Overall Results and Conclusions
+
+With the data from males, their p-values of  1.098e^-13 and on our fisher exact test we receive a p-value of 4.631e^-14, allowing for it to be reasonable for males to take the vaccine as it is proven to be effective. For females, we receive p-value's of 0.0002732 and 0.0002162 through our chisq and fisher exact tests, it would also be reasonable for them to get the vaccine. Now with LGBTQ members, we ran into some interesting data, we found those who had gotten the vaccine had higher odds of getting infected by covid, however, with our p-values being so small, 6.668e^-08 and 1.029e^-08, thanks to our chisq and fisher exact test. It also is about 5 times more likely to get covid, although the data suggests that there is effectiveness since the p-values are lower than 0.05, we reject the hypothesis that it has no effectiveness. For druggies, we see similar, we have a higher infection rate,7.9 times, with the vaccine than those who receive a placebo. Our p-values for those individuals are 2.842e^-09 and 2.32e^-10 thanks to our chisq and fisher exact tests. Overall, with how every p-value we receive is significantly lower than 0.05, we reject the null hypothesis that there is no effectiveness of the new Covid921 vaccine. With all of the data, it should be recommended that everyone in every subgroup take the new preventative Covid921 due to every p-value being less than 0.05, proving that there is effectiveness with the new vaccine.
